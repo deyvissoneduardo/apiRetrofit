@@ -1,0 +1,1 @@
+const mobileApp = 700;
