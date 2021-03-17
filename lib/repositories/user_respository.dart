@@ -11,8 +11,8 @@ abstract class UserRepository {
   @GET('/users')
   Future<List<UserModel>> findAll();
 
-  @GET('/users/id')
-  Future<UserModel> findById(@PATCH('id') String id);
+  @GET('/users/{id}')
+  Future<UserModel> findById(@Path('id') String id);
 
   @POST('/users')
   Future<void> save(@Body() UserModel user);

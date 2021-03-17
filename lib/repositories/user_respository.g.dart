@@ -41,7 +41,7 @@ class _UserRepository implements UserRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('/users/id',
+    final _result = await _dio.request<Map<String, dynamic>>('/users/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

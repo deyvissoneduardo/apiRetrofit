@@ -19,38 +19,45 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Center(child: Text('Api Retrofit'))),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => newUser(),
-        child: Icon(Icons.add),
-      ),
-      body: FutureBuilder<List<UserModel>>(
-        future: _repository.findAll(),
-        builder: (_, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
-            final users = snapshot.data;
-            return ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                final user = users[index];
-                return ListTile(
-                  onTap: () => showDetails(user.id),
-                  title: Text(user.name),
-                  subtitle: Text(user.username),
+    return LayoutBuilder(
+      builder: (context, contraints) {
+        return Scaffold(
+          appBar: AppBar(title: Center(child: Text('Api Retrofit'))),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => newUser(),
+            child: Icon(Icons.add),
+          ),
+          body: FutureBuilder<List<UserModel>>(
+            future: _repository.findAll(),
+            builder: (_, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              },
-            );
-          }
-          return Container();
-        },
-      ),
+              }
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                final users = snapshot.data;
+                return ListView.builder(
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    final user = users[index];
+                    return ListTile(
+                      onTap: () {
+                        print('clicou aqui ${user.id}');
+                        showDetails(user.id);
+                      },
+                      title: Text(user.name),
+                      subtitle: Text(user.username),
+                    );
+                  },
+                );
+              }
+              return Container();
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -64,11 +71,8 @@ class _HomePageState extends State<HomePage> {
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Container(
-                    height: 200,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
+                      height: 50,
+                      child: Center(child: CircularProgressIndicator()));
                 }
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
@@ -78,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Text(user.username),
                   );
                 }
+
                 return Container();
               },
             ),
